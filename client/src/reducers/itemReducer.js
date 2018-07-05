@@ -1,5 +1,5 @@
 import uuid from 'uuid'
-import {GET_ITEMS, ADD_ITEMS, DELETE_ITEMS} from '../actions/types'
+import {GET_ITEMS, ADD_ITEM, DELETE_ITEM} from '../actions/types'
 
 const initialState = {
   item: [
@@ -16,14 +16,16 @@ export default function(state = initialState, action) {
       return {
         ...state
       };
-      case ADD_ITEMS: 
+      case ADD_ITEM: 
         return {
-          ...state
+          ...state,
+          items: [action.payload, ...state.items]
         };
-      case DELETE_ITEMS:
+      case DELETE_ITEM:
         return {
-          ...state
-        }
+          ...state,
+          items: state.items.filter(item => item.id !== action.payload)
+        };
       default: 
         return state;
   }
